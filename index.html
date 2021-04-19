@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <title>TRAINING ONLINE</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular-route.js"></script>
+</head>
+
+<body ng-app="myapp">
+    <div class="container-fluid">
+        <header ng-controller="menu">
+            <img src="./tainguyen/images/banner.png" height="200px" width="100%" alt="">
+            <nav class="navbar navbar-expand-lg navbar-light bg-info ">
+                <a class="navbar-brand" ng-click="showIndex()" href="./index.html">Online Training</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav" style="color: white;">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" ng-click="showQuiz()" href="#!gioithieu" target="noidung">Giới
+                                thiệu</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" ng-click="showQuiz()" href="#!lienhe" target="noidung">Liên hệ</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" ng-click="showQuiz()" href="#!hoidap">Hỏi đáp</a>
+                        </li>
+                    </ul>
+                </div>
+                <form class="form-inline my-2 my-lg-0">
+                    <div class="dropdown">
+                        <button style="display: flex;height: 40px;" class="btn btn-secondary dropdown-toggle"
+                            type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i style="margin-top: 5px;" class="fas fa-user"></i>
+                            <p style="margin-left: 10px;" ng-hide="login">Tai Khoan</p>
+                            <p style="margin-left: 10px;" ng-show="login">{{tendangnhap}}</p>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div ng-hide="login">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#dkForm">Đăng kí</a>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#loginForm">Đăng
+                                    nhập</a>
+                                <a class="dropdown-item" href="#">Quên mật khẩu</a>
+                            </div>
+                           
+                            <div ng-show="login">
+                                <a class="dropdown-item" href="#">Đăng xuất</a>
+                                <a class="dropdown-item" href="#">Đổi mật khẩu</a>
+                                <a class="dropdown-item" href="#">Cập nhật tài khoản</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </nav>
+            <div class="row">
+
+                <div class="col-sm-8" ng-controller="monhocCtrl">
+                    <div ng-show="showHome">
+                        <div class="row">
+                            <div ng-repeat="mon in list|orderBy:prop|limitTo:6:begin" class="card text-left border-dark"
+                                style="display: block;width: 200px;;margin: 10px 0px 10px 50px;">
+                                <img class="card-img-top" src="./tainguyen/images/logos/{{mon.Logo}}" alt="">
+                                <div class="card-body">
+                                    <h4 class="card-title text-wrap">{{mon.Name}}</h4>
+
+                                </div>
+                                <div class="card-footer">
+                                    <a ng-click="showQuiz()" href="#!show/{{mon.Id}}"><button type="button"
+                                            class="btn btn-outline-primary">Test Now</button></a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" ng-click="first()"> <i
+                                            class="fas fa-step-backward"></i> First</a>
+                                </li>
+                                <li ng-click="back()" class="page-item"><a class="page-link" href="#"> <i
+                                            class="fas fa-backward"></i> Back</a></li>
+                                <li ng-click="next()" class="page-item"><a class="page-link" href="#"><i
+                                            class="fas fa-forward"></i> Next</a></li>
+                                <li ng-click="last()" class="page-item"><a class="page-link" href="#"><i
+                                            class="fas fa-step-forward"></i> Last</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div ng-hide="showHome" ng-view>
+
+                    </div>
+                </div>
+                <div ng-controller="ctrlListMonHoc" class="col-sm-4">
+                    <div class="card text-left">
+
+                        <div class="card-body">
+                            <h4 class="card-title"> <i class="fas fa-list"></i> Danh mục môn học</h4>
+                            <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button"
+                                                data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                                                aria-controls="collapseOne">
+                                                <i class="fas fa-laptop"></i>
+                                                Các môn CNTT
+
+                                            </button>
+                                        </h2>
+                                    </div>
+
+                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                        data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <ul class="list-group">
+                                                <li ng-repeat="(key,value) in listMon" class="list-group-item">
+                                                    <a ng-click="showQuiz()"
+                                                        href="#!show/{{value.Id}}">{{value.Name}}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingTwo">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                                data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                                aria-controls="collapseTwo">
+                                                <i class="fas fa-hotel"></i>
+                                                Các môn Kinh Tế
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                        data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">An item</li>
+                                                <li class="list-group-item">A second item</li>
+                                                <li class="list-group-item">A third item</li>
+                                                <li class="list-group-item">A fourth item</li>
+                                                <li class="list-group-item">And a fifth one</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingThree">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                                data-toggle="collapse" data-target="#collapseThree"
+                                                aria-expanded="false" aria-controls="collapseThree">
+                                                <i class="fas fa-concierge-bell"></i>
+                                                Các môn DL-NH-KS
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                        data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">An item</li>
+                                                <li class="list-group-item">A second item</li>
+                                                <li class="list-group-item">A third item</li>
+                                                <li class="list-group-item">A fourth item</li>
+                                                <li class="list-group-item">And a fifth one</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!--footer-->
+        <footer class="footer footer_bg_1 " style="border-top: 1px black solid;">
+            <div class="footer_top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-4 col-md-6 col-lg-4">
+                            <div class="footer_widget">
+
+                                <p>
+                                    Firmament morning sixth subdue darkness creeping gathered divide our let god moving.
+                                    Moving in fourth air night bring upon it beast let you dominion likeness open place
+                                    day
+                                    great.
+                                </p>
+                                <div class="socail_links">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fab fa-facebook fa-2x"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fab fa-twitter fa-2x"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fab fa-instagram-square fa-2x"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fab fa-youtube fa-2x"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class=" col-lg-3">
+                            <div class="footer_widget">
+                                <h3 class="footer_title">
+                                    Chủ đề
+                                </h3>
+                                <ul>
+                                    <li><a href="#">Lập trình</a></li>
+                                    <li><a href="#"> Photoshop</a></li>
+                                    <li><a href="#">Kinh tế</a></li>
+                                    <li><a href="#">Nhà hàng-Khách sạn</a></li>
+                                    <li><a href="#">Du lịch</a></li>
+                                </ul>
+
+                            </div>
+                        </div>
+
+                        <div class=" col-lg-4">
+                            <div class="footer_widget">
+                                <h3 class="footer_title">
+                                    Address
+                                </h3>
+                                <p>
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Nguyễn Văn Linh, Ninh Kiều, Cần Thơ<br>
+
+                                    <i class="fas fa-phone"></i>
+                                    +84971519342 <br>
+                                    <i class="fas fa-envelope-square"></i>
+                                    taltpc00653@fpt.edu.vn
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copy-right_text">
+                <div class="container">
+                    <div class="footer_border"></div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <p class="copy_right text-center">
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved by
+                                PC00653
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!--model login-->
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+    <div ng-controller="loginCtrl" class="modal fade" id="loginForm" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">USER NAME</label>
+                        <input ng-model="username" type="text" class="form-control" name="" id=""
+                            aria-describedby="helpId" placeholder="">
+                        <label for="">PASSWORD</label>
+                        <input ng-model="password" type="password" class="form-control" name="" id=""
+                            aria-describedby="helpId" placeholder="">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button ng-click="login()" type="button" class="btn btn-primary">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+        </div>
+        <div ng-controller="dkCtrl" class="modal fade" id="dkForm" tabindex="-1" aria-labelledby="dkForm"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">USER NAME</label>
+                        <input ng-model="username_dk" type="text" class="form-control" name="" id=""
+                            aria-describedby="helpId" placeholder="">
+                        <label for="">PASSWORD</label>
+                        <input ng-model="password_dk" type="password" class="form-control" name="" id=""
+                            aria-describedby="helpId" placeholder="">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button ng-click="dangki()" type="button" class="btn btn-primary">Create</button>
+                    </div>
+                </div>
+            </div>
+        <script src="./app.js"></script>
+</body>
+
+</html>

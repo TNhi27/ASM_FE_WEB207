@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <script src="./angular.min.js"></script>
+   
+    <title>QUIZ</title>
+</head>
+
+<body>
+
+    <div   class="container mt-sm-5 my-1" ng-controller="cauhoictrl">
+        <div ng-hide="start">
+            <button ng-click="startTest()" type="button" name="" id="" class="btn btn-primary" btn-lg btn-block">START</button>
+            
+        </div>
+        <div ng-show="showDiem">
+           DIEM: {{diem}}
+        </div>
+       
+       <div id="quizContainer" ng-show="start">
+           <div id="time">
+            <h3><i>THỜI GIAN CÒN LẠI LÀ </i></h3>
+            
+           </div>
+           <button ng-click="end()" type="button" name="" id="" class="btn btn-primary" btn-lg btn-block">End</button>
+           <div id="cauhoi">
+            <div class="question ml-sm-5 pl-sm-5 pt-2" >
+                <div class="py-2 h5"><b>Q. {{quiz.Text}}</b></div>
+               
+                <input id="a"  ng-model="tl" name="ans" type="radio" value="{{quiz.Answers[0].Id}}"> <label style="cursor: pointer;" for="a">{{quiz.Answers[0].Text}}</label> <br>
+                <input id="b" ng-model="tl" name="ans" type="radio" value="{{quiz.Answers[1].Id}}"> <label style="cursor: pointer;" for="b">{{quiz.Answers[1].Text}}</label> <br>
+                <input id="c"  ng-model="tl" name="ans" type="radio" value="{{quiz.Answers[2].Id}}"> <label style="cursor: pointer;" for="c">{{quiz.Answers[2].Text}}</label> <br>
+                <input id="d" ng-model="tl" name="ans" type="radio" value="{{quiz.Answers[3].Id}}"> <label style="cursor: pointer;" for="d">{{quiz.Answers[3].Text}}</label> <br>
+            </div>
+            
+            <div class="d-flex align-items-center pt-3">
+                <div ng-show="start" ng-click="back()" id="prev"> <button class="btn btn-primary">Previous</button> </div>
+                <div ng-show="start" ng-click="next()" class="ml-auto mr-sm-5"> <button class="btn btn-success">Next</button> </div>
+                
+            </div>
+           </div>
+       </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
